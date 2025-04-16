@@ -1,0 +1,54 @@
+{{ if .Values.mongo.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-svc
+spec:
+  ports:
+  - port: {{ .Values.mongo.port }}
+  selector:
+    app: free5gc-mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: free5gc-mongodb-d
+  labels:
+    part-of-mesh: "true"
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-mongodb
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: free5gc-mongodb
+        part-of-mesh: "true"
+    spec:
+      containers:
+      - image: {{ .Values.mongo.image }}
+        name: free5gc-mongodb
+        ports:
+        - containerPort: {{ .Values.mongo.port }}
+          name: mongodb
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-persistent-storage
+        persistentVolumeClaim:
+          claimName: mongodb-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+{{ end }}

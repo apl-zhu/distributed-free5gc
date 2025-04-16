@@ -1,0 +1,162 @@
+# ======================================================
+# 5G Core Environment Configuration
+# For this PoC will keep user and pwd in clear but you should use a vault for sensitive information
+# ======================================================
+openshift:
+  api_url: https://api.5g.cloud.com:6443
+  username: kubeadmin
+  password: LHkTH-ZZNwa-reKuJ-6Uj2Y
+  namespace: free5gc
+
+  # This is the host interface on the worker node where we bridge our additional network used by the UPF pod. If second interface not available, provide name for primary interface.
+  # This variable is used in the script playbooks/init/02-initialize-network.yaml
+  host_ifname: br-ex
+
+# Custom spec to add to pod manifest
+# In this case is used to schedule all the pods on a specific node
+default_custom_spec: "nodeSelector:\n     kubernetes.io/hostname: master-0"
+# example with nodeSelector to deploy on specific nodes
+#default_custom_spec: "nodeSelector:\n    kubernetes.io/hostname: ocp-worker-2"
+
+db_uri: mongodb://db/free5gc
+
+networks:
+  ran: "10.105.202.0"
+  pfcp: "10.106.201.0"
+  n2n3: "172.20.21.0" # Ensure that nodes.upf.gtp.ip is part of this subnet
+nodes:
+  amf:
+    n2:
+      ip: "172.20.21.222"
+      netmask: 24
+      mac: "CA:FE:CB:FF:EE:10"
+    port: 29518
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/amf"
+    custom: "{{ default_custom_spec }}"
+
+  sniffer:
+    n3:
+      ip: "172.20.21.63"
+      mac: "CA:FE:CB:22:EE:10"
+    n4:
+      ip: "10.106.201.25"
+      mac: "CA:FE:CB:22:EE:14"
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/sniffer-app"
+    custom: "{{ default_custom_spec }}"
+    port: 29530
+
+  ausf:
+    port: 29509
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/ausf"
+    custom: "{{ default_custom_spec }}"
+
+  chf:
+    port: 29520
+    port_abmf: 3868
+    port_rf: 3869
+    port_bill: 2122
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/chf"
+    custom: "{{ default_custom_spec }}"
+
+  gnb:
+    n2n3:
+      ip: "172.20.21.123"
+      netmask: 24
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/ueransim"
+    custom: "{{ default_custom_spec }}"
+
+  mongo:
+    port: 27017
+    pvc_name: mongodb-claim
+    image: five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/mongodb
+    custom: "{{ default_custom_spec }}"
+
+  n3iwf: # Currently unused
+    port: 29505
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/n3iwf"
+    custom: "{{ default_custom_spec }}"
+
+  n3ue: # Currently unused
+    port: 29506
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/n3ue"
+    custom: "{{ default_custom_spec }}"
+
+  nrf:
+    port: 29510
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nrf"
+    custom: "{{ default_custom_spec }}"
+
+  nssf:
+    port: 29531
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nssf"
+    custom: "{{ default_custom_spec }}"
+
+  pcf:
+    port: 29507
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/pcf"
+    custom: "{{ default_custom_spec }}"
+
+  smf:
+    pfcp:
+      ip: "10.106.201.3"
+      netmask: 24
+      mac: "CA:FE:CB:FF:BE:15"
+    port: 29502
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/smf"
+    custom: "{{ default_custom_spec }}"
+
+  udm:
+    port: 29503
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/udm"
+    custom: "{{ default_custom_spec }}"
+
+  udr:
+    port: 29504
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/udr"
+    custom: "{{ default_custom_spec }}"
+
+  upf:
+    gtp:
+      ip: "172.20.21.210"
+      netmask: 24
+      mac: "CA:FE:CB:FF:AE:18"
+    pfcp:
+      ip: "10.106.201.4"
+      netmask: 24
+      mac: "CA:FE:CB:FF:BE:18"
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/upf"
+    custom: "{{ default_custom_spec }}"
+
+  upf2:
+    gtp:
+      ip: "172.20.21.211"
+      netmask: 24
+      mac: "CA:FE:CB:FF:AF:18"
+    pfcp:
+      ip: "10.106.201.5"
+      netmask: 24
+      mac: "CA:FE:CB:FF:BF:18"
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/upf"
+    custom: "{{ default_custom_spec }}"
+
+  webui:
+    port: 5000
+    port_bill: 2121
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/webconsole"
+    custom: "{{ default_custom_spec }}"
+
+  uesim1: # unused
+    ran:
+      ip: "10.105.202.3"
+      netmask: 24
+      mac: "CA:FE:CB:FF:EE:21"
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/ueransim"
+    custom: "{{ default_custom_spec }}"
+
+  uesim2: # unused
+    ran:
+      ip: "10.105.202.4"
+      netmask: 24
+      mac: "CA:FE:CB:FF:EE:22"
+    image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/ueransim"
+    custom: "{{ default_custom_spec }}"
