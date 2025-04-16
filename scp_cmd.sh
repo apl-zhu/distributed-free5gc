@@ -1,0 +1,1 @@
+scp -o ProxyJump=qkw-5g@128.244.119.83:22162 -r C:\\Users\\zhujs1\\Desktop\\repos\\distributed-free5gc qkw@bastion:/home/qkw/repos

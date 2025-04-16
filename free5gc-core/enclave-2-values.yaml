@@ -1,0 +1,21 @@
+
+default_custom_spec: "nodeSelector:\n     kubernetes.io/hostname: master-0"
+
+amf:
+  n2:
+    ip: "172.20.21.222"
+    netmask: 24
+    mac: "CA:FE:CB:FF:EE:10"
+  enabled: true
+  mcc: 001
+  mnc: 01
+  tac: 000001
+  port: 29518
+  image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/amf"
+  custom: "{{ default_custom_spec }}"
+  serviceName: free5gc-amf-shared
+
+mongo:
+  port: 27017
+  image: five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/mongodb
+  custom: "{{ default_custom_spec }}"
