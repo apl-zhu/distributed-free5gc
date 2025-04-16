@@ -17,7 +17,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'gitlab.jhuapl.edu/roswell/cloud/distributed-free5gc'
+        repoURL: 'https://github.com/apl-zhu/distributed-free5gc'
         targetRevision: main
         path: "skupper/overlays/{{name}}"
       destination:

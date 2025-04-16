@@ -17,15 +17,15 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'TBD: Make distributed-free5gc a repo'
+        repoURL: 'https://github.com/apl-zhu/distributed-free5gc'
         targetRevision: main
-        path: '5gcore'
+        path: 'free5gc-core'
         helm: 
           valueFiles:
             - '{{name}}-values.yaml'
       destination:
         server: '{{server}}'
-        namespace: open5gcore
+        namespace: free5gc
       syncPolicy:
         automated:
           prune: true

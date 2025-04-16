@@ -1,51 +1,21 @@
-# Default values for 5gcore-helm.
 
-open5gcore:
-  image:
-    repository: quay.io/adetalho/open5gs
-    pullPolicy: Always
-    tag: "2.4.4"
-
-webui:
-  enabled: true
-  image:
-    repository: docker.io/efatnar/open5gcore-webui
-    pullPolicy: IfNotPresent
-    tag: "v1.1"
-
-dnn: internet  
-
-k8s:
- interface: eth0
+default_custom_spec: "nodeSelector:\n     kubernetes.io/hostname: master-0"
 
 amf:
+  n2:
+    ip: "172.20.21.222"
+    netmask: 24
+    mac: "CA:FE:CB:FF:EE:10"
   enabled: true
-  mcc: 208
-  mnc: 93
-  tac: 7
-  serviceName: open5gs-amf-shared
-bsf:
-  enabled: true
-ausf:
-  enabled: true
+  mcc: 001
+  mnc: 01
+  tac: 000001
+  port: 29518
+  image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/amf"
+  custom: "{{ default_custom_spec }}"
+  serviceName: free5gc-amf-shared
+
 mongo:
-  enabled: true
-nrf:
-  enabled: true
-  serviceName: open5gs-nrf
-nssf:
-  enabled: true
-pcf:
-  enabled: true
-  serviceName: open5gs-pcf-shared
-udm:
-  enabled: true
-  serviceName: open5gs-udm-shared
-udr:
-  enabled: true
-upf:
-  enabled: false
-  serviceName: open5gs-upf
-smf:
-  enabled: false
-  serviceName: open5gs-smf-shared
+  port: 27017
+  image: five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/mongodb
+  custom: "{{ default_custom_spec }}"
