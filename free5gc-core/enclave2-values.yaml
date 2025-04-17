@@ -21,11 +21,11 @@ mongo:
   enabled: false
   port: 27017
   image: five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/mongodb
-  custom: "{{ default_custom_spec }}"
+  custom: ""
 
 nrf:
   enabled: false
   port: 29510
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nrf"
-  custom: "{{ default_custom_spec }}"
+  custom: ""
   serviceName: free5gc-nrf-shared
