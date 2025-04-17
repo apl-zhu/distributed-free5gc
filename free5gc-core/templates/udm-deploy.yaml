@@ -36,8 +36,7 @@ spec:
       containers:
         - name: udm
           image: "{{ .Values.udm.image }}"
-          command:
-            - sleep 5 && /free5gc/udm
+          command: ['sh', '-c', 'sleep 5 && /free5gc/udm']
           env:
             - name: GIN_MODE
               value: release
