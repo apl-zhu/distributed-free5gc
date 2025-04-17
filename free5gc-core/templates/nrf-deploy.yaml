@@ -5,7 +5,7 @@ metadata:
   name: free5gc-nrf
   annotations:
     skupper.io/proxy: http2
-    skupper.io/address:  {{ .Values.nrf.serviceName }}
+    skupper.io/address: free5gc-nrf-shared
   labels:
     epc-mode: nrf
 spec:
