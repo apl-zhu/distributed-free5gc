@@ -13,7 +13,7 @@ data:
 
     configuration:
       MongoDBName: free5gc # database name in MongoDB
-      MongoDBUrl: mongodb://mongo-svc:{{ .Values.mongo.port }} # a valid URL of the mongodb
+      MongoDBUrl: mongodb://mongo-svc.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongo.port }} # a valid URL of the mongodb
       sbi: # Service-based interface information
         scheme: http # the protocol for sbi (http or https)
         registerIPv4: {{ .Values.nrf.serviceName }}.{{ .Release.Namespace }}.svc.cluster.local # IP used to serve NFs or register to another NRF

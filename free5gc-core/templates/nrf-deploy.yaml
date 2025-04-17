@@ -23,7 +23,6 @@ metadata:
   labels:
     epc-mode: nrf
 spec:
-  
   replicas: 1
   selector:
     matchLabels:
