@@ -9,9 +9,9 @@ amf:
     netmask: 24
     mac: "CA:FE:CB:FF:EE:10"
   enabled: false
-  mcc: 001
-  mnc: 01
-  tac: 000001
+  mcc: "001"
+  mnc: "01"
+  tac: "000001"
   port: 29518
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/amf"
   custom: "{{ default_custom_spec }}"
