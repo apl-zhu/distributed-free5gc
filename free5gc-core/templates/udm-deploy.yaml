@@ -1,4 +1,4 @@
-{{ if .Values.nrf.enabled }}
+{{ if .Values.udm.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
