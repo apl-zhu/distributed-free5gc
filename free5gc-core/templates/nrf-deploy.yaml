@@ -45,7 +45,7 @@ spec:
             - name: GIN_MODE
               value: release
           ports:
-            - containerPort: {{ nodes.nrf.port }}
+            - containerPort: {{ .Values.nrf.port }}
           securityContext:
             privileged: true
           volumeMounts:
