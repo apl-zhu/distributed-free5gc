@@ -1,0 +1,63 @@
+{{ if .Values.nrf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: free5gc-nrf
+  annotations:
+    skupper.io/proxy: http2
+    skupper.io/address:  {{ .Values.nrf.serviceName }}
+  labels:
+    epc-mode: nrf
+spec:
+  selector:
+    epc-mode: nrf
+  ports:
+    - protocol: TCP
+      port:  {{ .Values.nrf.port }}
+      targetPort:  {{ .Values.nrf.port }}
+---    
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: free5gc-nrf-d
+  labels:
+    epc-mode: nrf
+spec:
+  
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: nrf
+  template:
+    metadata:
+      labels:
+        epc-mode: nrf
+    spec:  
+      {{ .Values.nrf.custom }}
+      containers:
+        - name: nrf
+          image: "{{ .Values.nrf.image }}"
+          command:
+            - /free5gc/nrf
+          env:
+            - name: DB_URI
+              value: {{ .Values.db_uri }}
+            - name: GIN_MODE
+              value: release
+          ports:
+            - containerPort: {{ nodes.nrf.port }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: conf
+              mountPath: /free5gc/config/nrfcfg.yaml
+              subPath: nrfcfg.yaml
+      volumes:
+        - name: conf
+          configMap:
+            name: nrf-config
+            items:
+            - key: nrfcfg.yaml
+              path: nrfcfg.yaml
+
+{{ end }}

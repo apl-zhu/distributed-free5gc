@@ -27,6 +27,7 @@ spec:
         app: free5gc-mongodb
         part-of-mesh: "true"
     spec:
+      {{ .Values.mongo.custom }}
       containers:
       - image: {{ .Values.mongo.image }}
         name: free5gc-mongodb

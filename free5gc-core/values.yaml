@@ -1,6 +1,8 @@
 
 default_custom_spec: "nodeSelector:\n     kubernetes.io/hostname: master-0"
 
+db_uri: mongodb://db/free5gc
+
 amf:
   n2:
     ip: "172.20.21.222"
@@ -16,6 +18,14 @@ amf:
   serviceName: free5gc-amf-shared
 
 mongo:
+  enabled: false
   port: 27017
   image: five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/mongodb
   custom: "{{ default_custom_spec }}"
+
+nrf:
+  enabled: false
+  port: 29510
+  image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nrf"
+  custom: "{{ default_custom_spec }}"
+  serviceName: free5gc-nrf-shared
