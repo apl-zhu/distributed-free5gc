@@ -12,7 +12,7 @@ amf:
   mcc: "001"
   mnc: "01"
   tac: "000001"
-  port: 29518
+  port: 80
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/amf"
   custom: "{{ default_custom_spec }}"
   serviceName: free5gc-amf-shared
@@ -25,14 +25,14 @@ mongo:
 
 nrf:
   enabled: true
-  port: 29510
+  port: 80
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nrf"
   custom: ""
   serviceName: free5gc-nrf-shared
 
 udm:
   enabled: true
-  port: 29503
+  port: 80
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/udm"
   custom: ""
   serviceName: free5gc-udm-shared
