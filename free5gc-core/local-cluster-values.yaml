@@ -28,7 +28,7 @@ nrf:
   port: 80
   image: "five-g-quay-openshift-operators.apps.5g.cloud.com/fivegcloud/nrf"
   custom: ""
-  serviceName: free5gc-nrf-shared
+  serviceName: free5gc-nrf
 
 udm:
   enabled: true
