@@ -26,7 +26,7 @@ data:
         tls: # the local path of TLS key
           pem: cert/udm.pem # UDM TLS Certificate
           key: cert/udm.key # UDM TLS Private key
-      nrfUri: http://{{ .Values.nrf.serviceName }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.nrf.port }} # a valid URI of NRF
+      nrfUri: http://free5gc-nrf.free5gc.svc.cluster.local:{{ .Values.nrf.port }} # a valid URI of NRF
 
       # test data set from TS33501-f60 Annex C.4
       SuciProfile: # Home Network Public Key ID = slice index +1
