@@ -5,7 +5,7 @@ metadata:
   name: free5gc-udm
   annotations:
     skupper.io/proxy: http2
-    skupper.io/address:  {{ .Values.udm.serviceName }}
+    skupper.io/address: free5gc-udm-shared
   labels:
     epc-mode: udm
 spec:
